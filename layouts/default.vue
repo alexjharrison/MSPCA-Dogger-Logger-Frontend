@@ -1,8 +1,61 @@
 <template>
   <div>
-    <nuxt />
+    <b-navbar type="dark">
+      <img width="160" src="~/static/mspca_logo.png">
+      <div class="push-right">
+        <b-button size="sm" @click="logout" v-if="this.token" variant="outline-light">Log Out</b-button>
+      </div>
+    </b-navbar>
+    <nuxt/>
   </div>
 </template>
+
+<script>
+import { mapState } from 'vuex'
+export default {
+  computed: {
+    ...mapState(['token', 'me', 'dogs'])
+  },
+  mounted() {
+    const store = JSON.parse(localStorage.getItem('store'))
+    if (store) this.$store.commit('setState', store)
+    if (!this.token && this.$route.path === '/') this.$router.push('/login')
+  },
+  methods: {
+    logout() {
+      this.$store.commit('setToken', '')
+      this.$router.push('/login')
+    }
+  }
+}
+</script>
+
+<style scoped>
+img {
+  margin: -25px 0;
+}
+.navbar {
+  background: #2193b0; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #6dd5ed,
+    #2193b0
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #6dd5ed,
+    #2193b0
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-box-shadow: 1px 4px 5px -4px #aaa;
+  -moz-box-shadow: 1px 4px 5px -4px #aaa;
+  box-shadow: 1px 4px 5px -4px #aaa;
+}
+.push-right {
+  position: absolute;
+  right: 10px;
+}
+</style>
+
 
 <style>
 html {
