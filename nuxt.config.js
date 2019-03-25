@@ -54,7 +54,8 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: 'https://dogger-logger.aharrison.xyz/api/'
+    baseURL: 'https://dogger-logger.aharrison.xyz/api/',
+    credentials: true
   },
 
   /*
