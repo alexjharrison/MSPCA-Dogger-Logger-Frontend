@@ -40,18 +40,19 @@ export const actions = {
     })
   },
   register({ commit }, creds) {
-    return this.$axios.$post('auth/register', creds).then(res => {
-      if (!res.user) {
-        alert('Wrong username or password')
-        return
-      }
-      //set user info & token
-      console.log(res)
-      commit('setToken', res.token)
-      commit('setUser', res.user)
-      localStorage.setItem('store', JSON.stringify(this.state))
-      this.$router.push('/')
-    })
+    return this.$axios
+      .$post('auth/register', creds)
+      .then(res => {
+        //set user info & token
+        console.log(res)
+        commit('setToken', res.token)
+        commit('setUser', res.user)
+        localStorage.setItem('store', JSON.stringify(this.state))
+        this.$router.push('/')
+      })
+      .catch(() => {
+        alert('Email already registered')
+      })
   },
   getDogData({ commit }) {
     return this.$axios
