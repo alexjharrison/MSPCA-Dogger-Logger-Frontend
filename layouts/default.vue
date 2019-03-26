@@ -24,6 +24,7 @@ export default {
   methods: {
     logout() {
       this.$store.commit('setToken', '')
+      localStorage.setItem('store', JSON.stringify(this.$store.state))
       this.$router.push('/login')
     }
   }

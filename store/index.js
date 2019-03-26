@@ -16,9 +16,10 @@ export const mutations = {
   },
   setToken(state, token) {
     state.token = token
+    this.$axios.setToken(token, 'Bearer')
   },
   setMe(state, me) {
-    state.me = me
+    Object.assign(state.me, me)
   },
   setDogs(state, dogs) {
     state.dogs = dogs
@@ -27,26 +28,38 @@ export const mutations = {
 
 export const actions = {
   login({ commit }, creds) {
-    return this.$axios.$post('auth/login').then(res => {
-      console.log(res)
+    return this.$axios.$post('auth/login', creds).then(res => {
+      if (!res.user) {
+        alert('Wrong username or password')
+        return
+      }
       commit('setToken', res.token)
-      commit('setUser', res.user)
+      commit('setMe', res.user)
+      localStorage.setItem('store', JSON.stringify(this.state))
       this.$router.push('/')
     })
   },
   register({ commit }, creds) {
-    return this.$axios.$post('auth/register').then(res => {
+    return this.$axios.$post('auth/register', creds).then(res => {
+      if (!res.user) {
+        alert('Wrong username or password')
+        return
+      }
       //set user info & token
       console.log(res)
       commit('setToken', res.token)
       commit('setUser', res.user)
+      localStorage.setItem('store', JSON.stringify(this.state))
       this.$router.push('/')
     })
   },
   getDogData({ commit }) {
     return this.$axios
       .$get('dogs')
-      .then(data => commit('setDogs', data))
+      .then(data => {
+        commit('setDogs', data)
+        localStorage.setItem('store', JSON.stringify(this.state))
+      })
       .catch(err => {
         commit('setToken', '')
         this.$router.push('/login')
