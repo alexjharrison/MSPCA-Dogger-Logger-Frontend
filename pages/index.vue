@@ -5,6 +5,7 @@
       <div>{{ this.token }}</div>
       <span>{{ this.me }}</span>
       <span>{{ this.dogs }}</span>
+      <input type="file" name="file" id="file">
       <nuxt-link to="/login">Login</nuxt-link>
       <nuxt-link to="/register">Register</nuxt-link>
       <!-- <h1 class="title">dogger-logger</h1>
