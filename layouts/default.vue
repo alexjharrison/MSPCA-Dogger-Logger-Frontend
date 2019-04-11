@@ -19,7 +19,8 @@ export default {
   mounted() {
     const store = JSON.parse(localStorage.getItem('store'))
     if (store) this.$store.commit('setState', store)
-    if (!this.token && this.$route.path === '/') this.$router.push('/login')
+    this.$axios.setToken(this.token, 'Bearer')
+    this.$store.dispatch('getMyData')
   },
   methods: {
     logout() {
@@ -32,9 +33,6 @@ export default {
 </script>
 
 <style scoped>
-img {
-  margin: -25px 0;
-}
 .navbar {
   background: #2193b0; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -71,6 +69,15 @@ html {
   box-sizing: border-box;
 }
 
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.5s;
+}
+.page-enter,
+.page-leave-to {
+  opacity: 0;
+}
+/*
 *,
 *:before,
 *:after {
@@ -106,4 +113,5 @@ html {
   color: #fff;
   background-color: #35495e;
 }
+*/
 </style>

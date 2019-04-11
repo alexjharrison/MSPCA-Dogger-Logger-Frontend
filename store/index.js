@@ -61,7 +61,16 @@ export const actions = {
         commit('setDogs', data)
         localStorage.setItem('store', JSON.stringify(this.state))
       })
-      .catch(err => {
+      .catch(err => {})
+  },
+  getMyData({ commit, dispatch }) {
+    return this.$axios
+      .$get('user')
+      .then(data => {
+        commit('setMe', data)
+        dispatch('getDogData')
+      })
+      .catch(() => {
         commit('setToken', '')
         this.$router.push('/login')
       })
