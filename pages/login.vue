@@ -15,7 +15,6 @@
           </b-form-group>
         </b-form>
       </b-card>
-      <b-link to="/register">Switch to Register Page</b-link>
     </b-container>
   </div>
 </template>

@@ -1,9 +1,36 @@
 <template>
-  <div class="d-flex">
-    <b-button class="back"><--</b-button>
+  <div class="d-flex align-items-center flex-wrap justify-content-center">
+    <div v-if="selected" class="d-flex flex-column">
+      <b-button @click="$emit('updatePage','add-walk')" class="m-1" size="lg" variant="primary">
+        Add Walk
+        <img id="paw-print" src="/paw-print.png" alt="paw print">
+      </b-button>
+      <b-button
+        @click="$emit('updatePage','walk-data')"
+        class="m-1"
+        variant="outline-info"
+      >Walks Data</b-button>
+      <b-button
+        v-if="$store.state.me.role==='admin'"
+        @click="$emit('updatePage','something-else')"
+        class="m-1"
+        variant="outline-success"
+      >Update Info</b-button>
+      <b-button
+        class="m-1"
+        variant="outline-warning"
+        @click="$emit('updateId','')"
+      >&lt;- Back to List</b-button>
+    </div>
     <div class="dog-head" @click="$emit('updateId',dog.id)">
-      <img :src="image" :alt="dog.name">
-      <h4 :class="myClass">{{ dog.name }}</h4>
+      <img :class="selected ? 'selected' : ''" :src="image" :alt="dog.name">
+      <h4 class="text-center" v-if="!selected">{{ dog.name }}</h4>
+    </div>
+    <div v-if="selected" class="mx-4">
+      <p>Status: {{dog.status}}</p>
+      <p>Age: {{dog.age}}</p>
+      <p>Weight: {{dog.weight}}</p>
+      <p>Breed: {{dog.breed}}</p>
     </div>
   </div>
 </template>
@@ -12,15 +39,16 @@
 export default {
   props: ['dog', 'selectedId'],
   computed: {
-    myClass() {
-      return `text-center ${this.selectedId ? 'invisible' : 'visible'}`
+    selected() {
+      return this.dog.id === this.selectedId
     },
     image() {
       return this.dog.photo
-        ? `https://dogger-logger.aharrison.xyz/${this.dog.photo.filepath}`
+        ? `https://api.doggerlogger.aharrison.xyz/${this.dog.photo.filepath}`
         : '/silhouette.png'
     }
-  }
+  },
+  methods: {}
 }
 </script>
 
@@ -35,9 +63,21 @@ img {
   transition: all 0.3s ease;
 }
 img:hover {
-  -webkit-box-shadow: 4px 6px 5px 8px rgba(33, 147, 176, 0.308);
-  -moz-box-shadow: 4px 6px 5px 8px rgba(33, 147, 176, 0.308);
-  box-shadow: 4px 6px 5px 8px rgba(33, 147, 176, 0.308);
+  -webkit-box-shadow: 4px 6px 5px 8px rgba(23, 94, 112, 0.308);
+  -moz-box-shadow: 4px 6px 5px 8px rgba(23, 94, 112, 0.308);
+  box-shadow: 4px 6px 5px 8px rgba(23, 94, 112, 0.308);
   transition: all 0.5s ease;
+}
+.selected {
+  border-radius: 5px;
+}
+p {
+  margin: 0;
+  font-size: 25px;
+}
+#paw-print {
+  border-radius: 0;
+  box-shadow: none;
+  width: 25px;
 }
 </style>

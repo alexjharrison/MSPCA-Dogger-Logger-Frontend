@@ -1,5 +1,5 @@
 <template>
-  <div id="login">
+  <div id="register">
     <b-container class="mt-5">
       <b-card class="mb-2" title="Register New Account">
         <b-form @submit.prevent="register">

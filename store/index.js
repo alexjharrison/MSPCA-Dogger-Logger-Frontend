@@ -36,7 +36,7 @@ export const actions = {
       commit('setToken', res.token)
       commit('setMe', res.user)
       localStorage.setItem('store', JSON.stringify(this.state))
-      this.$router.push('/')
+      this.$router.push('/dogs')
     })
   },
   register({ commit }, creds) {
@@ -48,7 +48,7 @@ export const actions = {
         commit('setToken', res.token)
         commit('setUser', res.user)
         localStorage.setItem('store', JSON.stringify(this.state))
-        this.$router.push('/')
+        this.$router.push('/dogs')
       })
       .catch(() => {
         alert('Email already registered')

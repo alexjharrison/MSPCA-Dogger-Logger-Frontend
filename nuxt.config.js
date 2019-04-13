@@ -26,6 +26,11 @@ module.exports = {
   */
   css: [],
 
+  server: {
+    port: 8000,
+    host: '0.0.0.0'
+  },
+
   /*
   ** Plugins to load before mounting the App
   */
@@ -54,7 +59,7 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: 'https://api.doggerlogger.aharrison.xyz/'
+    baseURL: 'https://api.doggerlogger.aharrison.xyz/api/'
     // credentials: true
   },
 
