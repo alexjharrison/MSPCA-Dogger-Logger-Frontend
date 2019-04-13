@@ -1,5 +1,6 @@
 <template>
   <div class="container-fluid">
+    <span @click="selectedDogId=''" id="back-btn" v-if="selectedDogId">&#128281;</span>
     <h1 class="text-center my-3 mx-5">{{selectedDogId ? selectedDog.name : "Select Dog"}}</h1>
     <transition-group class="dog-list" name="doggy" method="out-in">
       <Head
@@ -39,9 +40,13 @@ export default {
       return this.dogs.filter(dog => dog.id === this.selectedDogId)[0]
     },
     visibleDogs() {
-      if (this.selectedDogId) return [this.selectedDog]
-      else if (!status) return this.dogs
-      else return this.dogs.filter(dog => dog.status === this.status)
+      let dogList = []
+      if (this.selectedDogId) dogList.push(this.selectedDog)
+      else if (!status) dogList.push(...this.dogs)
+      else dogList = this.dogs.filter(dog => dog.status === this.status)
+      return dogList.sort(
+        (a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0)
+      )
     }
   },
   methods: {
@@ -67,6 +72,15 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+#back-btn {
+  position: absolute;
+  font-size: 30px;
+  cursor: pointer;
+  margin-left: 20px;
+}
+#back-btn:hover {
+  opacity: 0.7;
 }
 .doggy {
   backface-visibility: hidden;

@@ -1,26 +1,28 @@
 <template>
   <div class="d-flex align-items-center flex-wrap justify-content-center">
     <div v-if="selected" class="d-flex flex-column">
-      <b-button @click="$emit('updatePage','add-walk')" class="m-1" size="lg" variant="primary">
+      <b-button
+        to="#add-walk"
+        @click="$emit('updatePage','add-walk')"
+        class="m-1"
+        size="lg"
+        variant="primary"
+      >
         Add Walk
         <img id="paw-print" src="/paw-print.png" alt="paw print">
       </b-button>
       <b-button
+        to="#walk-data"
         @click="$emit('updatePage','walk-data')"
         class="m-1"
         variant="outline-info"
       >Walks Data</b-button>
       <b-button
         v-if="$store.state.me.role==='admin'"
-        @click="$emit('updatePage','something-else')"
+        @click="$emit('updatePage','update-info')"
         class="m-1"
         variant="outline-success"
       >Update Info</b-button>
-      <b-button
-        class="m-1"
-        variant="outline-warning"
-        @click="$emit('updateId','')"
-      >&lt;- Back to List</b-button>
     </div>
     <div class="dog-head" @click="$emit('updateId',dog.id)">
       <img :class="selected ? 'selected' : ''" :src="image" :alt="dog.name">
@@ -79,5 +81,10 @@ p {
   border-radius: 0;
   box-shadow: none;
   width: 25px;
+}
+@media screen and (max-width: 500px) {
+  img {
+    width: 150px;
+  }
 }
 </style>

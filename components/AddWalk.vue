@@ -1,6 +1,8 @@
 <template>
-  <div id="add-walk">
-    <h1>Add Walk</h1>
+  <div id="add-walk" class="m-2 p-2">
+    <h1>
+      <u>Add Walk</u>
+    </h1>
   </div>
 </template>
 
@@ -8,5 +10,9 @@
 export default {}
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+#add-walk {
+  border: solid 2px lightgreen;
+  border-radius: 5px;
+}
 </style>
