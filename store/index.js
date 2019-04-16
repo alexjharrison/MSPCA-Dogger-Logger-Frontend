@@ -28,6 +28,7 @@ export const mutations = {
 
 export const actions = {
   login({ commit }, creds) {
+    commit('setToken', '')
     return this.$axios.$post('auth/login', creds).then(res => {
       if (!res.user) {
         alert('Wrong username or password')
@@ -40,6 +41,7 @@ export const actions = {
     })
   },
   register({ commit }, creds) {
+    commit('setToken', '')
     return this.$axios
       .$post('auth/register', creds)
       .then(res => {
