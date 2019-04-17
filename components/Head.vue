@@ -28,10 +28,9 @@
       <img :class="selected ? 'selected' : ''" :src="image" :alt="dog.name">
       <h4 class="text-center" v-if="!selected">{{ dog.name }}</h4>
       <b-form-file
-        @input="uploadPic"
         id="pic-input"
         accept="image/*"
-        placeholder="update pup pic"
+        placeholder="update pic"
         v-model="pic"
         v-if="selected"
       />
@@ -61,6 +60,11 @@ export default {
       return this.dog.photo
         ? `https://api.doggerlogger.aharrison.xyz/${this.dog.photo.filepath}`
         : '/silhouette.png'
+    }
+  },
+  watch: {
+    pic() {
+      this.uploadPic()
     }
   },
   methods: {
