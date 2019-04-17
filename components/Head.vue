@@ -27,6 +27,14 @@
     <div class="dog-head" @click="$emit('updateId',dog.id)">
       <img :class="selected ? 'selected' : ''" :src="image" :alt="dog.name">
       <h4 class="text-center" v-if="!selected">{{ dog.name }}</h4>
+      <b-form-file
+        @input="uploadPic"
+        id="pic-input"
+        accept="image/*"
+        placeholder="update pup pic"
+        v-model="pic"
+        v-if="selected"
+      />
     </div>
     <div v-if="selected" class="mx-4">
       <p>Status: {{dog.status}}</p>
@@ -40,6 +48,11 @@
 <script>
 export default {
   props: ['dog', 'selectedId'],
+  data() {
+    return {
+      pic: ''
+    }
+  },
   computed: {
     selected() {
       return this.dog.id === this.selectedId
@@ -50,7 +63,21 @@ export default {
         : '/silhouette.png'
     }
   },
-  methods: {}
+  methods: {
+    uploadPic() {
+      let data = new FormData()
+      data.append('photo', this.pic)
+      data.append('dog_id', this.dog.id)
+      this.$axios
+        .$post('photo', data)
+        .then(res => {
+          const dogId = this.dog.id
+          let newPhoto = res.photo
+          this.$store.commit('setDogPhoto', { dogId, newPhoto })
+        })
+        .catch(err => console.log(err))
+    }
+  }
 }
 </script>
 
@@ -86,5 +113,11 @@ p {
   img {
     width: 150px;
   }
+}
+</style>
+
+<style>
+#pic-input {
+  width: 1px;
 }
 </style>

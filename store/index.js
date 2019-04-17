@@ -23,6 +23,11 @@ export const mutations = {
   },
   setDogs(state, dogs) {
     state.dogs = dogs
+  },
+  setDogPhoto(state, { dogId, newPhoto }) {
+    let photo = state.dogs.filter(dog => dog.id === dogId)[0].photo
+    photo.filepath = newPhoto.filepath
+    photo.id = newPhoto.id
   }
 }
 
