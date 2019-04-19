@@ -33,7 +33,7 @@ module.exports = {
   css: [],
 
   server: {
-    port: 8000,
+    port: 3000,
     host: '0.0.0.0'
   },
 
@@ -65,7 +65,7 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: 'https://api.doggerlogger.aharrison.xyz/api/'
+    baseURL: 'http://127.0.0.1:8000/api/'
     // credentials: true
   },
 

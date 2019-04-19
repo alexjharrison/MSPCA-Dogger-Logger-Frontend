@@ -2,19 +2,19 @@
   <div id="new-dog" class="m-4">
     <hr>
     <span class="h3 mt-4">Add New Dog</span>
-    <b-form class="p-4 text-left" @submit.prevent="submit">
+    <b-form class="p-4 text-left" @submit.prevent="submitDog">
       <b-form-group label="Enter Dog's Name">
-        <b-input type="text" v-model="name" placeholder="Name"/>
+        <b-input required type="text" v-model="name" placeholder="Name"/>
       </b-form-group>
       <b-form-group label="Enter Dog's Age">
-        <b-input type="number" v-model="age" placeholder="Age"/>
+        <b-input required type="number" v-model="age" placeholder="Age"/>
         <b-form-radio-group :options="aoptions" v-model="ageInterval"/>
       </b-form-group>
       <b-form-group label="Enter Dog's Weight (lbs)">
-        <b-input type="number" v-model="weight" placeholder="Weight"/>
+        <b-input required type="number" v-model="weight" placeholder="Weight"/>
       </b-form-group>
       <b-form-group label="Enter Dog's Breed">
-        <b-input type="text" v-model="breed" placeholder="Breed"/>
+        <b-input required type="text" v-model="breed" placeholder="Breed"/>
       </b-form-group>
       <b-form-group label="Enter Dog's Gender">
         <b-form-radio-group v-model="gender" :options="goptions"/>
@@ -33,6 +33,7 @@
       </b-form-group>
       <img v-if="loading" class="my-3 spinner" src="/spinner.gif" alt="spinner">
       <b-button v-else class="my-3" variant="success" type="submit">Submit</b-button>
+      <span>{{' ' + message}}</span>
     </b-form>
   </div>
 </template>
@@ -51,6 +52,7 @@ export default {
       gender: 'Male',
       ageInterval: 'years',
       loading: false,
+      message: '',
       aoptions: [
         { value: 'months', text: 'months' },
         { value: 'years', text: 'years' }
@@ -82,24 +84,35 @@ export default {
           alert(err.message)
           this.loading = false
         })
+    },
+    submitDog() {
+      let data = {
+        name: this.name,
+        age: this.age + ' ' + this.ageInterval,
+        weight: this.weight,
+        breed: this.breed,
+        gender: this.gender,
+        status: this.status
+      }
+      if (this.photoId) data['photo_id'] = this.photoId
+      console.log(data)
+      this.message = 'Sending...'
+      this.$axios.setHeader('Content-Type', 'x-www-form-urlencoded')
+      this.$axios
+        .$post('dog', data)
+        .then(res => {
+          console.log(res)
+          this.$store.commit('setDogs', res)
+          this.message = this.name + ' Added!'
+          setTimeout(() => {
+            this.message = ''
+          }, 5000)
+        })
+        .catch(err => {
+          console.log(err)
+          this.message = 'Submission Failed'
+        })
     }
-  },
-  submitDog() {
-    let data = {
-      name: this.name,
-      age: this.age + ' ' + this.ageInterval,
-      weight: this.weight,
-      breed: this.breed,
-      photo_id: this.photoId,
-      gender: this.gender
-    }
-    this.$axios
-      .$post('dog', data)
-      .then(res => {
-        console.log(res)
-        this.$store.commit('dogs', res)
-      })
-      .catch(err => console.log(err))
   }
 }
 </script>
