@@ -30,8 +30,10 @@
       <b-form-file
         id="pic-input"
         accept="image/*"
+        @input="uploadPic"
+        :state="Boolean(photo)"
         placeholder="update pic"
-        v-model="pic"
+        v-model="photo"
         v-if="selected"
       />
     </div>
@@ -49,7 +51,7 @@ export default {
   props: ['dog', 'selectedId'],
   data() {
     return {
-      pic: ''
+      photo: null
     }
   },
   computed: {
@@ -62,22 +64,17 @@ export default {
         : '/silhouette.png'
     }
   },
-  watch: {
-    pic() {
-      this.uploadPic()
-    }
-  },
   methods: {
     uploadPic() {
       let data = new FormData()
-      data.append('photo', this.pic)
+      data.append('photo', this.photo)
       data.append('dog_id', this.dog.id)
       this.$axios
         .$post('photo', data)
         .then(res => {
-          const dogId = this.dog.id
-          let newPhoto = res.photo
-          this.$store.commit('setDogPhoto', { dogId, newPhoto })
+          // const dogId = this.dog.id
+          // let newPhoto = res.photo
+          this.$store.commit('setDogs', res.dogs)
         })
         .catch(err => console.log(err))
     }

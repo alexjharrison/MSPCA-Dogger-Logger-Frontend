@@ -12,16 +12,17 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
-    "bootstrap-vue": "^2.0.0-rc.15",
+    "bootstrap-vue": "^2.0.0-rc.18",
     "cross-env": "^5.2.0",
     "node-sass": "^4.11.0",
-    "nuxt": "^2.4.0",
-    "sass-loader": "^7.1.0"
+    "nuxt": "^2.6.2",
+    "sass-loader": "^7.1.0",
+    "vue2-dropzone": "^3.5.8"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9",
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-prettier": "2.6.2",
+    "nodemon": "^1.18.11",
     "prettier": "1.14.3"
   }
 }
