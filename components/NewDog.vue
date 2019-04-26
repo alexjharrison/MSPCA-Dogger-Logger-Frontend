@@ -4,7 +4,7 @@
     <span class="h3 mt-4">Add New Dog</span>
     <b-form class="p-4 text-left" @submit.prevent="submitDog">
       <b-form-group label="Enter Dog's Name">
-        <b-input required type="text" v-model="name" placeholder="Name"/>
+        <b-input id="dog-name" required type="text" v-model="name" placeholder="Name"/>
       </b-form-group>
       <b-form-group label="Enter Dog's Age">
         <b-input required type="number" v-model="age" placeholder="Age"/>
@@ -104,6 +104,16 @@ export default {
           console.log(res)
           this.$store.commit('setDogs', res)
           this.message = this.name + ' Added!'
+          this.name= ''
+          this.age= ''
+          this.weight= ''
+          this.breed= ''
+          this.status= 'Receiving'
+          this.photo= null
+          this.photoId= null
+          this.gender= 'Male'
+          this.ageInterval= 'years'
+          document.getElementById('dog-name').focus();
           setTimeout(() => {
             this.message = ''
           }, 5000)

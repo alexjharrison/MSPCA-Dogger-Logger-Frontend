@@ -22,20 +22,10 @@
       <b-form-group label="Enter Dog's Status">
         <b-form-radio-group v-model="status" :options="soptions"/>
       </b-form-group>
-      <b-form-group label="Upload Photo (optional)">
-        <b-form-file
-          v-model="photo"
-          placeholder="Choose a photo..."
-          accept="image/*"
-          :state="Boolean(photo)"
-          @input="uploadPhoto"
-        />
-      </b-form-group>
       <img v-if="loading" class="my-3 spinner" src="/spinner.gif" alt="spinner">
       <b-button v-else class="my-3" variant="success" type="submit">Submit</b-button>
       <span>{{' ' + message}}</span>
     </b-form>
-    {{dog}}
   </div>
 </template>
 
@@ -45,14 +35,14 @@ export default {
   data() {
     return {
       name: this.dog.name,
-      age: this.dog.age,
+      age: this.dog.age.split(' ')[0],
+      ageInterval: this.dog.age.split(' ')[1],
       weight: this.dog.weight,
       breed: this.dog.breed,
       status: this.dog.status,
       photo: null,
       photoId: this.dog.photo_id,
       gender: this.dog.gender,
-      ageInterval: 'years',
       loading: false,
       message: '',
       aoptions: [
@@ -71,25 +61,20 @@ export default {
     }
   },
   methods: {
-    uploadPhoto() {
-      this.loading = true
-      let data = new FormData()
-      data.append('photo', this.photo)
-      this.$axios
-        .$post('photo', data)
-        .then(res => {
-          console.log(res)
-          this.photoId = res.photo.id
-          this.loading = false
-        })
-        .catch(err => {
-          alert(err.message)
-          this.loading = false
-        })
-    },
     submitDog() {
-      alert('add axios here')
+      const {name,weight,breed,status,gender} = this
+      const data = {name,weight,breed,status,gender,age:this.age + ' '+ this.ageInterval,id:this.dog.id}
+      this.$axios.$put('dog',data).then(dogs => {
+        this.$store.commit('setDogs',dogs);
+        this.message=this.name+" saved"
+        setTimeout(()=>{
+          this.message = ''
+        },5000)
+      }).catch(err=>this.message = 'Something went wrong :-(')
     }
+  },
+  mounted(){
+    console.log(this.dog.age.split(' ')[1])
   }
 }
 </script>

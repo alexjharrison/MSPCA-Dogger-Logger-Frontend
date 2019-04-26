@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     options() {
-      return this.users.map(user => ({ text: user.name, value: user.id }))
+      return this.users.map(user => ({ text: user.name+' (' + user.email + ')', value: user.id }))
     }
   },
   methods: {

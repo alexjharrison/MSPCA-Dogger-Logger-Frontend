@@ -65,7 +65,7 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: 'http://127.0.0.1:8000/api/'
+    baseURL: 'https://api.doggerlogger.aharrison.xyz/api/'
     // credentials: true
   },
 
