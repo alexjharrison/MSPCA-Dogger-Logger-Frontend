@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex align-items-center flex-wrap justify-content-center">
+  <div class="d-flex align-items-center flex-wrap justify-content-center mb-3">
     <div v-if="selected" class="d-flex flex-column">
       <b-button
         to="#add-walk"
@@ -40,9 +40,10 @@
     <div v-if="selected" class="mx-4">
       <p>Status: {{dog.status}}</p>
       <p>Age: {{dog.age}}</p>
-      <p>Weight: {{dog.weight}}</p>
+      <p>Weight: {{dog.weight}} lbs</p>
       <p>Breed: {{dog.breed}}</p>
     </div>
+    <hr>
   </div>
 </template>
 
@@ -60,8 +61,11 @@ export default {
     },
     image() {
       return this.dog.photo
-        ? `https://api.doggerlogger.aharrison.xyz/${this.dog.photo.filepath}`
+        ? `http://localhost:8000/${this.dog.photo.filepath}`
         : '/silhouette.png'
+      // return this.dog.photo
+      //   ? `https://api.doggerlogger.aharrison.xyz/${this.dog.photo.filepath}`
+      //   : '/silhouette.png'
     }
   },
   methods: {

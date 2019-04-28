@@ -40,7 +40,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [],
+  plugins: ['~/plugins/apexCharts.js'],
 
   /*
   ** Nuxt.js modules
@@ -49,7 +49,9 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     // Doc: https://bootstrap-vue.js.org/docs
-    'bootstrap-vue/nuxt'
+    'bootstrap-vue/nuxt',
+    // Doc: https://www.npmjs.com/package/nuxt-mq
+    'nuxt-mq'
   ],
   /*
   ** BootstrapVue module configuration
@@ -65,8 +67,21 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: 'https://api.doggerlogger.aharrison.xyz/api/'
+    // baseURL: 'https://api.doggerlogger.aharrison.xyz/api/'
+    baseURL: 'http://localhost:8000/api/'
     // credentials: true
+  },
+
+  // nuxt-mq config
+  mq: {
+    defaultBreakpoint: 'default',
+    breakpoints: {
+      xs: 420,
+      sm: 600,
+      md: 928,
+      lg: 1200,
+      xl: Infinity
+    }
   },
 
   /*

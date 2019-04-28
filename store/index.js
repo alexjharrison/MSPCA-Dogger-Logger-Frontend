@@ -1,14 +1,9 @@
 export const state = () => ({
   token: '',
   me: {},
-  dogs: []
+  dogs: [],
+  users: []
 })
-
-export const getters = {
-  dogById(state, id) {
-    // return state.dogs.filter(dog => dog.id === id)
-  }
-}
 
 export const mutations = {
   setState(state, newState) {
@@ -22,17 +17,31 @@ export const mutations = {
     Object.assign(state.me, me)
   },
   setDogs(state, dogs) {
+    // sort walks by date
+    dogs = dogs.map(dog => {
+      return {
+        ...dog,
+        walks: dog.walks.sort(function(a, b) {
+          a = new Date(a.created_at)
+          b = new Date(b.created_at)
+          return a > b ? -1 : a < b ? 1 : 0
+        })
+      }
+    })
     state.dogs = dogs
   },
   setDogPhoto(state, { dogId, newPhoto }) {
     let photo = state.dogs.filter(dog => dog.id === dogId)[0].photo
     photo.filepath = newPhoto.filepath
     photo.id = newPhoto.id
+  },
+  setUsers(state, users) {
+    Object.assign(state.users, users)
   }
 }
 
 export const actions = {
-  login({ commit }, creds) {
+  login({ commit, dispatch }, creds) {
     commit('setToken', '')
     return this.$axios.$post('auth/login', creds).then(res => {
       if (!res.user) {
@@ -41,6 +50,7 @@ export const actions = {
       }
       commit('setToken', res.token)
       commit('setMe', res.user)
+      dispatch('getAllUsers')
       localStorage.setItem('store', JSON.stringify(this.state))
       this.$router.push('/dogs')
     })
@@ -54,6 +64,7 @@ export const actions = {
         console.log(res)
         commit('setToken', res.token)
         commit('setUser', res.user)
+        dispatch('getAllUsers')
         localStorage.setItem('store', JSON.stringify(this.state))
         this.$router.push('/dogs')
       })
@@ -81,5 +92,10 @@ export const actions = {
         commit('setToken', '')
         this.$router.push('/login')
       })
+  },
+  getAllUsers({ commit }) {
+    return this.$axios.$get('users').then(users => {
+      commit('setUsers', users)
+    })
   }
 }

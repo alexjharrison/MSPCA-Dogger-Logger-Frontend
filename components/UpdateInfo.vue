@@ -1,6 +1,5 @@
 <template>
-  <div class="p-4" v-if="$store.state.me.role==='admin'" id="update-info">
-    <hr>
+  <div class="px-4" v-if="$store.state.me.role==='admin'" id="update-info">
     <span class="h3 mt-4">Update Dog Info</span>
     <b-form id="new-dog-form" class="p-4 text-left" @submit.prevent="submitDog">
       <b-form-group label="Enter Dog's Name">
@@ -62,18 +61,29 @@ export default {
   },
   methods: {
     submitDog() {
-      const {name,weight,breed,status,gender} = this
-      const data = {name,weight,breed,status,gender,age:this.age + ' '+ this.ageInterval,id:this.dog.id}
-      this.$axios.$put('dog',data).then(dogs => {
-        this.$store.commit('setDogs',dogs);
-        this.message=this.name+" saved"
-        setTimeout(()=>{
-          this.message = ''
-        },5000)
-      }).catch(err=>this.message = 'Something went wrong :-(')
+      const { name, weight, breed, status, gender } = this
+      const data = {
+        name,
+        weight,
+        breed,
+        status,
+        gender,
+        age: this.age + ' ' + this.ageInterval,
+        id: this.dog.id
+      }
+      this.$axios
+        .$put('dog', data)
+        .then(dogs => {
+          this.$store.commit('setDogs', dogs)
+          this.message = this.name + ' saved'
+          setTimeout(() => {
+            this.message = ''
+          }, 5000)
+        })
+        .catch(err => (this.message = 'Something went wrong :-('))
     }
   },
-  mounted(){
+  mounted() {
     console.log(this.dog.age.split(' ')[1])
   }
 }
