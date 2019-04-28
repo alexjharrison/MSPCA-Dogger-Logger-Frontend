@@ -140,7 +140,6 @@ export default {
                 value,
                 { series, seriesIndex, dataPointIndex, w }
               ) {
-                console.log('poops')
                 return value
               }
             }
@@ -308,7 +307,7 @@ export default {
     width() {
       const mq = this.$mq
       return mq === 'xs'
-        ? window.innerWidth
+        ? window.innerWidth - 100
         : mq === 'sm'
           ? 419
           : mq === 'md'
