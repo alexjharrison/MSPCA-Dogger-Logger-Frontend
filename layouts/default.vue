@@ -6,6 +6,11 @@
         <b-button size="sm" @click="logout" v-if="this.token" variant="outline-light">Log Out</b-button>
       </div>
     </b-navbar>
+    <b-nav tabs v-if="$store.state.me.role==='admin'">
+      <b-nav-item to="/">Dogs</b-nav-item>
+      <b-nav-item to="/newdog">Add Dog</b-nav-item>
+      <b-nav-item to="/adminify">Adminify Users</b-nav-item>
+    </b-nav>
     <nuxt/>
   </div>
 </template>
@@ -77,7 +82,7 @@ h5,
 h6 {
   font-family: 'Roboto', sans-serif;
 }
-
+/* 
 .page-enter-active,
 .page-leave-active {
   transition: opacity 0.5s;
@@ -85,5 +90,5 @@ h6 {
 .page-enter,
 .page-leave-to {
   opacity: 0;
-}
+} */
 </style>

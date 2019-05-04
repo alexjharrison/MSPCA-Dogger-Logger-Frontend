@@ -1,5 +1,5 @@
 <template>
-  <div id="new-dog" class="m-4">
+  <div id="new-dog">
     <hr>
     <span class="h3 mt-4">Add New Dog</span>
     <b-form class="p-4 text-left" @submit.prevent="submitDog">
@@ -104,16 +104,16 @@ export default {
           console.log(res)
           this.$store.commit('setDogs', res)
           this.message = this.name + ' Added!'
-          this.name= ''
-          this.age= ''
-          this.weight= ''
-          this.breed= ''
-          this.status= 'Receiving'
-          this.photo= null
-          this.photoId= null
-          this.gender= 'Male'
-          this.ageInterval= 'years'
-          document.getElementById('dog-name').focus();
+          this.name = ''
+          this.age = ''
+          this.weight = ''
+          this.breed = ''
+          this.status = 'Receiving'
+          this.photo = null
+          this.photoId = null
+          this.gender = 'Male'
+          this.ageInterval = 'years'
+          document.getElementById('dog-name').focus()
           setTimeout(() => {
             this.message = ''
           }, 5000)
@@ -131,6 +131,7 @@ export default {
 #new-dog {
   max-width: 800px;
   border-radius: 10px;
+  margin: 0 auto;
 }
 .spinner {
   height: 35px;

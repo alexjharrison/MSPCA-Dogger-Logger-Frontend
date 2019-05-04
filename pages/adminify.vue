@@ -70,5 +70,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+#adminify {
+  margin: 0 auto;
+}
 </style>

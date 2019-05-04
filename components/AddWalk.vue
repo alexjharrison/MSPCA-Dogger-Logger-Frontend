@@ -81,31 +81,53 @@ export default {
       pooped: false,
       peed: false,
       medical: false,
-      medical_concern: "",
+      medical_concern: '',
       jumps: 0,
-      jump_handlage: "",
+      jump_handlage: '',
       mouthings: 0,
-      mouthings_handlage: "",
+      mouthings_handlage: '',
       dogs_seen: 0,
       dogs_seen_reacted: 0,
-      seen_dog_reaction: "",
-      other_concerns: "",
-      options: [{ text: "Nope", value: false }, { text: "Yup", value: true }]
-    };
+      seen_dog_reaction: '',
+      other_concerns: '',
+      options: [{ text: 'Nope', value: false }, { text: 'Yup', value: true }]
+    }
   },
   methods: {
     submit() {
-      const {pooped,peed,medical_concern,jumps,jump_handlage,mouthings,mouthings_handlage,dogs_seen,dogs_seen_reacted,seen_dog_reaction,other_concerns} = this;
-      const data = {pooped,peed,medical_concern,jumps,jump_handlage,mouthings,mouthings_handlage,dogs_seen,dogs_seen_reacted,seen_dog_reaction,other_concerns,dog_id:this.dog.id}
-      this.$axios.$post("walk",data).then(dogs => {
-        this.$store.commit("setDogs", dogs);
-      });
+      const {
+        pooped,
+        peed,
+        medical_concern,
+        jumps,
+        jump_handlage,
+        mouthings,
+        mouthings_handlage,
+        dogs_seen,
+        dogs_seen_reacted,
+        seen_dog_reaction,
+        other_concerns
+      } = this
+      const data = {
+        pooped,
+        peed,
+        medical_concern,
+        jumps,
+        jump_handlage,
+        mouthings,
+        mouthings_handlage,
+        dogs_seen,
+        dogs_seen_reacted,
+        seen_dog_reaction,
+        other_concerns,
+        dog_id: this.dog.id
+      }
+      this.$axios.$post('walk', data).then(dogs => {
+        this.$store.commit('setDogs', dogs)
+      })
     }
-  },
-  mounted () {
-    console.log(this.dog)
   }
-};
+}
 </script>
 
 <style>

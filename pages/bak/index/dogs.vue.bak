@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <span @click="selectedDogId=''" id="back-btn" v-if="selectedDogId">&#128281;</span>
+    <!-- <span @click="selectedDogId=''" id="back-btn" v-if="selectedDogId">&#128281;</span>
     <h1 class="text-center my-3 mx-5">{{selectedDogId ? selectedDog.name : "Select Dog"}}</h1>
     <transition-group class="dog-list" name="doggy" method="out-in">
       <Head
@@ -15,7 +15,7 @@
     </transition-group>
     <walk-data v-if="page==='walk-data'" :dog="selectedDog"/>
     <add-walk v-if="page==='add-walk'" :dog="selectedDog"/>
-    <update-info v-if="page==='update-info'" :dog="selectedDog"/>
+    <update-info v-if="page==='update-info'" :dog="selectedDog"/>-->
   </div>
 </template>
 

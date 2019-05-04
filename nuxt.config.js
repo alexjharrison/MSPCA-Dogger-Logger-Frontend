@@ -67,8 +67,8 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: 'https://api.doggerlogger.aharrison.xyz/api/'
-    // baseURL: 'http://localhost:8000/api/'
+    // baseURL: 'https://api.doggerlogger.aharrison.xyz/api/'
+    baseURL: 'http://localhost:8000/api/'
     // credentials: true
   },
 
@@ -88,6 +88,8 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    extractCSS: true,
+    analyze: true,
     /*
     ** You can extend webpack config here
     */
