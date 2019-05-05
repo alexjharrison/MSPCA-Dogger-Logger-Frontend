@@ -71,6 +71,7 @@ export default {
         age: this.age + ' ' + this.ageInterval,
         id: this.dog.id
       }
+      this.$router.push('/')
       this.$axios
         .$put('dog', data)
         .then(dogs => {

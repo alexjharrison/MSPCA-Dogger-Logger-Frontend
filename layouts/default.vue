@@ -27,11 +27,16 @@ export default {
     const store = JSON.parse(localStorage.getItem('store'))
     if (store) this.$store.commit('setState', store)
     this.$axios.setToken(this.token, 'Bearer')
-    this.$store.dispatch('getMyData')
   },
   methods: {
     logout() {
-      this.$store.commit('setToken', '')
+      // this.$store.commit('setToken', '')
+      this.$store.commit('setState', {
+        token: '',
+        me: {},
+        dogs: [],
+        users: []
+      })
       localStorage.setItem('store', JSON.stringify(this.$store.state))
       this.$router.push('/login')
     }

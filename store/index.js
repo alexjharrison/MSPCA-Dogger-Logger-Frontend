@@ -36,7 +36,8 @@ export const mutations = {
     photo.id = newPhoto.id
   },
   setUsers(state, users) {
-    Object.assign(state.users, users)
+    // state.users, users
+    state.users.splice(0, state.users.length, ...users)
   }
 }
 
@@ -55,15 +56,15 @@ export const actions = {
       this.$router.push('/')
     })
   },
-  register({ commit }, creds) {
+  register({ commit, dispatch }, creds) {
     commit('setToken', '')
-    return this.$axios
+    this.$axios
       .$post('auth/register', creds)
       .then(res => {
         //set user info & token
         console.log(res)
         commit('setToken', res.token)
-        commit('setUser', res.user)
+        commit('setMe', res.user)
         dispatch('getAllUsers')
         localStorage.setItem('store', JSON.stringify(this.state))
         this.$router.push('/')
@@ -87,6 +88,7 @@ export const actions = {
       .then(data => {
         commit('setMe', data)
         dispatch('getDogData')
+        localStorage.setItem('store', JSON.stringify(this.state))
       })
       .catch(() => {
         commit('setToken', '')
@@ -96,6 +98,7 @@ export const actions = {
   getAllUsers({ commit }) {
     return this.$axios.$get('users').then(users => {
       commit('setUsers', users)
+      localStorage.setItem('store', JSON.stringify(this.state))
     })
   }
 }

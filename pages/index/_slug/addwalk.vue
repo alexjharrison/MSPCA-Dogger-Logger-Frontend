@@ -124,6 +124,7 @@ export default {
       }
       this.$axios.$post('walk', data).then(dogs => {
         this.$store.commit('setDogs', dogs)
+        this.$router.push('/' + this.dog.slug)
       })
     }
   },

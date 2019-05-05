@@ -69,19 +69,19 @@ export default {
     }
   },
   methods: {
-    uploadPic() {
-      let data = new FormData()
-      data.append('photo', this.photo)
-      data.append('dog_id', this.dog.id)
-      this.$axios
-        .$post('photo', data)
-        .then(res => {
-          // const dogId = this.dog.id
-          // let newPhoto = res.photo
-          this.$store.commit('setDogs', res.dogs)
-        })
-        .catch(err => console.log(err))
-    }
+    // uploadPic() {
+    //   let data = new FormData()
+    //   data.append('photo', this.photo)
+    //   data.append('dog_id', this.dog.id)
+    //   this.$axios
+    //     .$post('photo', data)
+    //     .then(res => {
+    //       // const dogId = this.dog.id
+    //       // let newPhoto = res.photo
+    //       this.$store.commit('setDogs', res.dogs)
+    //     })
+    //     .catch(err => console.log(err))
+    // }
   }
 }
 </script>

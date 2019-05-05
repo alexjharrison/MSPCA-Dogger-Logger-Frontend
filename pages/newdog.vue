@@ -82,7 +82,7 @@ export default {
           this.loading = false
         })
         .catch(err => {
-          alert(err.message)
+          // alert(err.message)
           this.loading = false
         })
     },

@@ -1,8 +1,13 @@
 <template>
   <div id="app" v-if="$store.state.token">
     <div class="container-fluid">
-      <span @click="$router.push('/')" id="back-btn" v-if="currentSlug">&#128281;</span>
-      <h1 class="text-center my-3 mx-5">{{currentSlug ? selectedDog.name : "Select Dog"}}</h1>
+      <b-button
+        @click="$router.push('/')"
+        id="back-btn"
+        v-if="currentSlug"
+        variant="outline-dark"
+      >Back</b-button>
+      <h1 class="text-center my-3 mx-5">{{currentSlug ? selectedDog[0].name : "Select Dog"}}</h1>
       <transition-group class="dog-list" name="doggy">
         <div
           v-for="dog in visibleDogs"
@@ -30,6 +35,18 @@
               class="m-1"
               variant="outline-success"
             >Update Info</b-button>
+            <b-button
+              v-if="$store.state.me.role==='admin'"
+              v-b-modal.delete-dog-modal
+              class="m-1"
+              size="sm"
+              variant="outline-danger"
+            >Remove Dog</b-button>
+            <b-modal
+              id="delete-dog-modal"
+              title="Warning"
+              @ok="removeDog"
+            >Are you sure you want to delete {{selectedDog[0].name}}?</b-modal>
           </div>
           <div class="dog-head" @click="$router.push('/'+dog.slug)">
             <img :class="currentSlug ? 'selected' : ''" :src="image(dog)" :alt="dog.name">
@@ -44,7 +61,7 @@
               v-if="currentSlug"
             />
           </div>
-          <div v-if="currentSlug" class="mx-4">
+          <div v-if="currentSlug" class="flex-grow-1 text-center">
             <p>Status: {{dog.status}}</p>
             <p>Age: {{dog.age}}</p>
             <p>Weight: {{dog.weight}} lbs</p>
@@ -73,9 +90,9 @@ export default {
       return this.dogs.filter(dog => dog.slug == this.currentSlug)
     },
     visibleDogs() {
-      let dogList = [...this.dogs].sort(
-        (a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0)
-      )
+      let dogList = [...this.dogs]
+        .filter(dog => dog.status !== 'removed')
+        .sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
       let thisDog = this.selectedDog
       console.log(this.currentSlug ? this.selectedDog : dogList)
       return this.currentSlug ? this.selectedDog : dogList
@@ -100,6 +117,15 @@ export default {
           this.$store.commit('setDogs', res.dogs)
         })
         .catch(err => console.log(err))
+    },
+    removeDog() {
+      this.$axios
+        .$put('dog', { status: 'removed', id: this.selectedDog[0].id })
+        .then(dogs => {
+          this.$store.commit('setDogs', dogs)
+          this.$router.push('/')
+        })
+        .catch(err => alert('Something went wrong :-('))
     }
   },
 
@@ -119,9 +145,8 @@ export default {
 }
 #back-btn {
   position: absolute;
-  font-size: 30px;
-  cursor: pointer;
-  margin-left: 20px;
+  margin-left: 10px;
+  margin-top: -13px;
 }
 #back-btn:hover {
   opacity: 0.7;

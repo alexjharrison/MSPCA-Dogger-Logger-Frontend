@@ -17,15 +17,12 @@
 </template>
 
 <script>
-import { nextTick } from 'q'
 export default {
   name: 'adminify',
   data() {
     return {
-      users: [],
       selectedIds: [],
-      message: '',
-      admins: []
+      message: ''
     }
   },
   computed: {
@@ -34,37 +31,42 @@ export default {
         text: user.name + ' (' + user.email + ')',
         value: user.id
       }))
+    },
+    allUsers() {
+      return this.$store.state.users
+    },
+    users() {
+      return this.allUsers
+        .filter(user => user.role === 'walker')
+        .sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
+    },
+    admins() {
+      return this.allUsers
+        .filter(user => user.role === 'admin')
+        .sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
+        .map(user => `${user.name} (${user.email})`)
     }
   },
   methods: {
     submit() {
       this.message = 'submitting...'
-      const { selectedIds } = this
       this.$axios
-        .$post('adminify', { user_ids: selectedIds })
+        .$post('adminify', { user_ids: this.selectedIds })
         .then(res => {
           console.log(res)
           this.message = 'Success!'
-          this.getUsers()
+          this.$store.dispatch('getAllUsers')
           setTimeout(() => {
             this.message = ''
           }, 5000)
         })
         .catch(err => (this.message = 'Submission Failed :-('))
-    },
-    getUsers() {
-      this.$axios.$get('users').then(users => {
-        this.users = []
-        this.admins = users
-          .filter(user => user.role === 'admin')
-          .sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
-          .map(user => user.name)
-        users = users
-          .filter(user => user.role === 'walker')
-          .sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
-        this.users.splice(0, 0, ...users)
-      })
     }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.$store.dispatch('getAllUsers')
+    }, 0)
   }
 }
 </script>
