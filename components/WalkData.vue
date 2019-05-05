@@ -87,7 +87,7 @@ export default {
           walker: this.walkerName(walk.user_id),
           concerns: walk[concern]
         }))
-        .filter(walk => walk.concerns !== '')
+        .filter(walk => walk.concerns)
     },
     clear() {
       this.wasteComment = ''
