@@ -106,7 +106,7 @@ export default {
       // return photo
       //   ? 'http://localhost:8000/' + photo.filepath
       //   : '/silhouette.png'
-      return this.dog.photo
+      return photo
         ? `https://api.doggerlogger.aharrison.xyz/${this.dog.photo.filepath}`
         : '/silhouette.png'
     },
