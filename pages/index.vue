@@ -103,8 +103,11 @@ export default {
   },
   methods: {
     image({ photo }) {
-      return photo
-        ? 'http://localhost:8000/' + photo.filepath
+      // return photo
+      //   ? 'http://localhost:8000/' + photo.filepath
+      //   : '/silhouette.png'
+      return this.dog.photo
+        ? `https://api.doggerlogger.aharrison.xyz/${this.dog.photo.filepath}`
         : '/silhouette.png'
     },
     uploadPic({ id }) {

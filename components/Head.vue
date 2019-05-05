@@ -60,12 +60,12 @@ export default {
       return this.dog.id === this.selectedId
     },
     image() {
-      return this.dog.photo
-        ? `http://localhost:8000/${this.dog.photo.filepath}`
-        : '/silhouette.png'
       // return this.dog.photo
-      //   ? `https://api.doggerlogger.aharrison.xyz/${this.dog.photo.filepath}`
-      //   : '/silhouette.png'
+      // ? `http://localhost:8000/${this.dog.photo.filepath}`
+      // : '/silhouette.png'
+      return this.dog.photo
+        ? `https://api.doggerlogger.aharrison.xyz/${this.dog.photo.filepath}`
+        : '/silhouette.png'
     }
   },
   methods: {
