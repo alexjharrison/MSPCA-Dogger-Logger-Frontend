@@ -17,7 +17,9 @@
 </template>
 
 <script>
+import { nextTick } from 'q'
 export default {
+  name: 'adminify',
   data() {
     return {
       users: [],
@@ -25,9 +27,6 @@ export default {
       message: '',
       admins: []
     }
-  },
-  mounted() {
-    this.getUsers()
   },
   computed: {
     options() {

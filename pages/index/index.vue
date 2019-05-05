@@ -1,6 +1,4 @@
-<template>
-  <nuxt-child/>
-</template>
+<template></template>
 
 <script>
 export default {}

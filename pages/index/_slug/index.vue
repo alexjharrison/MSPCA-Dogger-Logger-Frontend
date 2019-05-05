@@ -7,6 +7,7 @@
 <script>
 import WalkData from '~/components/WalkData'
 export default {
+  name: 'walkdata',
   components: { WalkData },
   computed: {
     dog() {

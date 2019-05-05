@@ -40,6 +40,7 @@
 
 <script>
 export default {
+  name: 'newdog',
   data() {
     return {
       name: '',

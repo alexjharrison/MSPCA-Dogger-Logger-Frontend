@@ -10,14 +10,23 @@
           class="d-flex align-items-center flex-wrap justify-content-center mb-3"
         >
           <div v-if="currentSlug" class="d-flex flex-column">
-            <b-button :to="`/${currentSlug}/addwalk`" class="m-1" size="lg" variant="primary">
+            <b-button
+              @click="$router.push(`/${currentSlug}/addwalk`)"
+              class="m-1"
+              size="lg"
+              variant="primary"
+            >
               Add Walk
               <img id="paw-print" src="/paw-print.png" alt="paw print">
             </b-button>
-            <b-button :to="'/'+dog.slug" class="m-1" variant="outline-info">Walks Data</b-button>
+            <b-button
+              @click="$router.push('/'+dog.slug)"
+              class="m-1"
+              variant="outline-info"
+            >Walks Data</b-button>
             <b-button
               v-if="$store.state.me.role==='admin'"
-              :to="`/${currentSlug}/updateinfo`"
+              @click="$router.push(`/${currentSlug}/updateinfo`)"
               class="m-1"
               variant="outline-success"
             >Update Info</b-button>
@@ -45,13 +54,14 @@
         </div>
       </transition-group>
     </div>
-    <nuxt-child/>
+    <nuxt-child :key="$route.path"/>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 export default {
+  name: 'home',
   data() {
     return {
       photo: ''
